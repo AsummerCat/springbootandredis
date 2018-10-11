@@ -44,7 +44,7 @@ public class HelloConrtoller {
     @RequestMapping(value = "updateUser")
     public String updateUser( String id){
         userService.updateUser(id);
-        return "更新success";
+        return "更新success"; 
     }
 
 
