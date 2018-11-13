@@ -1,5 +1,6 @@
 package com.linjingc.springbootandredis.service;
 
+import cn.hutool.db.nosql.redis.RedisDS;
 import com.linjingc.springbootandredis.dao.UserDao;
 import com.linjingc.springbootandredis.vo.User;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.Jedis;
 
 import java.awt.print.Book;
 
@@ -19,7 +21,7 @@ import java.awt.print.Book;
  * @date 2018/10/8 17:43
  */
 @Slf4j
-@CacheConfig(cacheNames = "emp")
+@CacheConfig(cacheNames = "user")
 @Service()
 public class UserService {
     @Autowired
@@ -28,6 +30,10 @@ public class UserService {
     @Cacheable(key = "'user_'+#id")
     public String findUser(String id){
         log.info("进入方法 查询id:{}",id);
+        Jedis jedis = RedisDS.create().getJedis();
+            jedis.set("测试","测试set--->"+id);
+
+
         return userDao.findUser(id).toString();
     }
 
