@@ -30,10 +30,6 @@ public class UserService {
     @Cacheable(key = "'user_'+#id")
     public String findUser(String id){
         log.info("进入方法 查询id:{}",id);
-        Jedis jedis = RedisDS.create().getJedis();
-            jedis.set("测试","测试set--->"+id);
-
-
         return userDao.findUser(id).toString();
     }
 
